@@ -1,5 +1,5 @@
 {
-  "name": "Chrome DOM Watcher",
+  "name": "DOM Watcher",
   "version": "1.0",
   "manifest_version": 2,
   "description": "Whatches DOM elements for changes and values.",
