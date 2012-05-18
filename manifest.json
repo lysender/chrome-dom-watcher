@@ -1,0 +1,19 @@
+{
+  "name": "Chrome DOM Watcher",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Whatches DOM elements for changes and values.",
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {"16": "16.png", "48": "48.png", "128": "128.png"},
+  "permissions": ["tabs", "http://*/*", "https://*/*"],
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["watcher.js"]
+    }
+  ]
+}

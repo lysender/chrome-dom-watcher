@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Chrome DOM Watcher</title>
+<link rel="stylesheet" href="options.css" type="text/css" />
+<script type="text/javascript" src="options.js"></script>
+</head>
+<body>
+<h1>
+  <img src="64.png" alt="Toast">
+  Chrome DOM Watcher
+</h1>
+<h2>Options</h2>
+
+<p>The configuration uses a JSON style format. The first level keys are variable or object names and its values
+  are either object's elements or null.</p>
+<p>If the value is null, the first level key's value is tracked rather than
+  its elements.
+</p>
+<form id="opt">
+  <div class="block">
+    <div class="block-lbl">
+      <span>Objects to inspect:</span>
+    </div>
+    <div class="block-input">
+      <textarea id="config" name="config" rows="10" cols="20"></textarea>
+    </div>
+  </div><!-- /.block -->
+
+  <div class="block">
+    <div class="block-lbl">
+      <span>&nbsp;</span>
+    </div>
+    <div class="block-input">
+      <input type="button" name="submit" id="submit" value="Save" />
+    </div>
+  </div><!-- /.block -->
+  <br />
+</form>
+
+<h2 id="about">About</h2>
+<p>Chrome DOM Watcher is a Google Chrome extension that allows you to set 
+  DOM objects to watch and report their values.</p>
+
+<p>This simple utility is designed for developers that always need to inspect DOM objects <br />
+and watch their values for a page.</p>
+
+<p>Source code: <a href="https://github.com/lysender/chrome-dom-watcher">Github</a></p>
+
+<p><strong>Questions? Suggestions?</strong></p>
+
+<p>Lysender &lt;leonel at lysender dot com&gt;<br />
+<a href="http://www.lysender.com/">http://www.lysender.com/</a></p>
+
+
+<h2 id="credits">Credits</h2>
+
+<p>Chromium team for the notification sample used in this extension.</p>
+
+<p>KDE Artwork team for the Oxygen icons.</p>
+</body>
+</html>

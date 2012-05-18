@@ -1,0 +1,51 @@
+body {
+  margin: 10px;
+  font: 84% Arial, sans-serif;
+}
+
+h1 { font-size: 156% }
+
+h1 img {
+  margin: 1px 5px 0 1px;
+  vertical-align: middle;
+}
+
+h2 {
+  border-top: 1px solid #9cc2ef;
+  background-color: #ebeff9;
+  padding: 3px 5px;
+  font-size: 100%;
+}
+
+#opt { width: 400px; }
+
+.block {
+  float: left;
+  width: 650px;
+}
+
+.block-lbl {
+  float: left;
+  width: 150px;
+}
+
+.block-lbl span {
+  display: block;
+  margin-top: 4px;
+}
+
+.block-input {
+  float: left;
+  width: 500px;
+}
+
+.block-input textarea {
+  width:450px;
+  height:200px;
+}
+
+#about, #credits {
+  margin-top: 30px;
+}
+
+br { clear: both; }
