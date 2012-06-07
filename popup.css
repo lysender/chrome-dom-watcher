@@ -1,20 +1,23 @@
 body {
-  min-width:357px;
+  min-width:457px;
   overflow-x:hidden;
+  padding: 0 3px 2px;
+  font-size: 70%;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+#watched-objects p {
+  margin-bottom: 0;
+}
 table {
   max-width: 100%;
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
-  font-size: 70%;
-  font-family: sans-serif;
 }
 
 .table {
   width: 100%;
-  margin-bottom: 10px;
 }
 
 .table th,

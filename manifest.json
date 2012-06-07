@@ -2,7 +2,7 @@
   "name": "DOM Watcher",
   "version": "1.0",
   "manifest_version": 2,
-  "description": "Whatches DOM elements for changes and values.",
+  "description": "Watches DOM element values and reports it back.",
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"

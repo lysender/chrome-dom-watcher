@@ -22,13 +22,15 @@ function loadWatchedObjects(result) {
 
     if (result && result.length > 0) {
         var s = "<table class='table table-bordered table-striped table-condensed'><tbody>";
-
+        var x = 1;
         for (var k in result) {
             if (result.hasOwnProperty(k) && result[k] && typeof result[k] == "object") {
                 s += "<tr>";
+                s += "<td>" + x + "</td>";
                 s += "<td>" + result[k][0].join(".") + " &nbsp;</td>";
                 s += "<td>" + result[k][1] + " &nbsp;</td>";
                 s += "</tr>";
+                x++;
             }
         }
 

@@ -13,8 +13,8 @@
 <h2>Options</h2>
 
 <p>The configuration uses a JSON style format. The first level keys are variable or object names and its values
-  are either object's elements or null.</p>
-<p>If the value is null, the first level key's value is tracked rather than
+  are either object's elements or 1.</p>
+<p>If the value is 1, the first level key's value is tracked rather than
   its elements.
 </p>
 <form id="opt">
@@ -37,6 +37,11 @@
   </div><!-- /.block -->
   <br />
 </form>
+
+<h2 id="about">Sample config</h2>
+<p>Below is a sample config. Config is in JSON format.</p>
+<p>Make sure it does not have spaces around keys, values and brackets to make it a valid JSON string.</p>
+<textarea id="sample-config" name="sample-config" rows="10" cols="20">{"utag_data":{"site_name":1,"page_name":1,"page_type":1,"section_name":1},"s":{"pageName":1,"channel":1}}</textarea>
 
 <h2 id="about">About</h2>
 <p>Chrome DOM Watcher is a Google Chrome extension that allows you to set 

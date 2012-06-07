@@ -49,3 +49,8 @@ h2 {
 }
 
 br { clear: both; }
+
+textarea#sample-config {
+  width:600px;
+  height:100px; 
+}
