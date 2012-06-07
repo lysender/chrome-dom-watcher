@@ -6,14 +6,30 @@
  //window.bar = 2;
  //window.utag = {"utag_data":'this is utag data',"utag_test":'this is utag test',"utag_deep":{"deep1":'1 km',"deep2":'2 miles'},"others":1}
 
+ // Determines if the watcher script has been loaded or not
+ // If not loaded, a script is loaded into DOM
+ // If already loaded, the function is just called
+var hasLoadedWatcherScript = false;
+
 chrome.extension.onRequest.addListener(function(request, sender, sendResponse){
 
     if (typeof request.config == "object") {
         createDataContainer("chrome-dom-watcher");
 
+        // Load watcher script/function only once
+        if (!hasLoadedWatcherScript) {
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.text = generateScriptCodes();
+            document.body.appendChild(s);
+
+            hasLoadedWatcherScript = true;
+        }
+
+        // Load the caller script
         var s = document.createElement("script");
         s.type = "text/javascript";
-        s.text = generateScriptCodes(request.config);
+        s.text = generateCallerScriptCodes(request.config);
         document.body.appendChild(s);
 
         sendResponse({"result": JSON.parse(getDataContainerValue("chrome-dom-watcher"))});
@@ -67,61 +83,77 @@ function getDataContainerValue(id) {
     return "";
 }
 
-
-function generateScriptCodes(config) {
+/** 
+ * Generates a script that calls the watcher function on the page's DOM
+ * This requires that the function must be previously inserted
+ *
+ */
+function generateCallerScriptCodes(config) {
     var ret = '';
-    ret += '    (function(){';
+    ret += '(function(){';
     
-    ret += '            var config = ' + JSON.stringify(config) + ';';
-    ret += '            var e = document.getElementById("chrome-dom-watcher");';
+    ret += '    var config = ' + JSON.stringify(config) + ';';
+    ret += '    var e = document.getElementById("chrome-dom-watcher");';
     
-    ret += '            if (e) {';
-    ret += '                e.value = JSON.stringify(traverseWatchedObjects(config, window, []));';
-    ret += '            }';
+    ret += '    if (e) {';
+    ret += '        e.value = JSON.stringify(traverseWatchedObjects(config, window, []));';
+    ret += '    }';
+
+    ret += '})();';
+
+
+
+    return ret;
+}
+
+/** 
+ * Generates a script that defines a function that can parse/traverse the DOM
+ * and returns the result back to the extension
+ *
+ * @returns String
+ */
+function generateScriptCodes() {
+    var ret = '';
     
-    ret += '            function traverseWatchedObjects(configObject, targetObject, trail) {';
+    ret += 'function traverseWatchedObjects(configObject, targetObject, trail) {';
     
-    ret += '                var resultObject = [];';
+    ret += '    var resultObject = [];';
 
-    ret += '                if (configObject && targetObject && typeof configObject == "object" && typeof targetObject == "object") {';
+    ret += '    if (configObject && targetObject && typeof configObject == "object" && typeof targetObject == "object") {';
 
-    ret += '                    for (var k in configObject) {';
+    ret += '        for (var k in configObject) {';
 
-    ret += '                        if (k && configObject.hasOwnProperty(k) && targetObject.hasOwnProperty(k)) {';
-    ret += '                            var currentTrail = trail.slice();';
-    ret += '                            currentTrail.push(k);';
+    ret += '            if (k && configObject.hasOwnProperty(k) && targetObject.hasOwnProperty(k)) {';
+    ret += '                var currentTrail = trail.slice();';
+    ret += '                currentTrail.push(k);';
 
-    ret += '                            var configValue = configObject[k];';
-    ret += '                            var targetValue = targetObject[k];';
+    ret += '                var configValue = configObject[k];';
+    ret += '                var targetValue = targetObject[k];';
 
-    ret += '                            if (typeof configValue == "object") {';
-    ret += '                                deepResult = traverseWatchedObjects(configValue, targetValue, currentTrail);';
+    ret += '                if (typeof configValue == "object") {';
+    ret += '                    deepResult = traverseWatchedObjects(configValue, targetValue, currentTrail);';
 
-    ret += '                                if (typeof deepResult == "object") {';
-    ret += '                                    for (var i in deepResult) {';
-    ret += '                                        if (deepResult.hasOwnProperty(i)) {';
-    ret += '                                            resultObject.push(deepResult[i]);';
-    ret += '                                        }';
-    ret += '                                    }';
-    ret += '                                }';
-    ret += '                            } else {';
-    ret += '                                var elementValue = "[Object]";';
-
-    ret += '                                if (typeof targetValue !== "object") {';
-    ret += '                                    elementValue = targetValue;';
-    ret += '                                }';
-
-    ret += '                                resultObject.push([currentTrail, elementValue]);';
+    ret += '                    if (typeof deepResult == "object") {';
+    ret += '                        for (var i in deepResult) {';
+    ret += '                            if (deepResult.hasOwnProperty(i)) {';
+    ret += '                                resultObject.push(deepResult[i]);';
     ret += '                            }';
     ret += '                        }';
     ret += '                    }';
+    ret += '                } else {';
+    ret += '                    var elementValue = "[Object]";';
+
+    ret += '                    if (typeof targetValue !== "object") {';
+    ret += '                        elementValue = targetValue;';
+    ret += '                    }';
+
+    ret += '                    resultObject.push([currentTrail, elementValue]);';
     ret += '                }';
-    ret += '                return resultObject;';
     ret += '            }';
-
-    ret += '        })();';
-
-
+    ret += '        }';
+    ret += '    }';
+    ret += '    return resultObject;';
+    ret += '}';
 
     return ret;
 }
