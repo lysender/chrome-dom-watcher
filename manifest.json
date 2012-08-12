@@ -9,6 +9,7 @@
   },
   "icons": {"16": "16.png", "48": "48.png", "128": "128.png"},
   "permissions": ["tabs", "http://*/*", "https://*/*"],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "options_page": "options.html",
   "content_scripts": [
     {
