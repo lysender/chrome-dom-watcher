@@ -14,6 +14,8 @@ chrome.tabs.getSelected(null, function(tab) {
         chrome.tabs.sendRequest(tab.id, {"config": config}, function(response) {
             loadWatchedObjects(response.result);
         });
+    } else {
+        document.getElementById("watched-objects").innerHTML = "<p>No valid config yet, go to extension options and set the objects to watch.</p>";
     }
 });
 

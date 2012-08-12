@@ -1,7 +1,20 @@
 onload = function(){
 
   document.getElementById("submit").onclick = function(){
-    saveConfig(document.getElementById("config").value);
+    var configStr = document.getElementById("config").value;
+    var config = null;
+
+    try {
+      config = JSON.parse(configStr);
+    } catch (err) {
+      // Foo
+    }
+    
+    if (config && typeof config === "object") {
+      saveConfig(configStr);
+    } else {
+      alert("Invalid JSON config, check the config and try again.");
+    }
   };
 
   loadConfig()
@@ -13,9 +26,6 @@ function loadConfig() {
   if (config && config.length > 0) {
     // Convert config from JSON object to string
     document.getElementById("config").value = config;
-  } else {
-    // Load dummy config
-    document.getElementById("config").value = '{"foo":1,"bar":1}';
   }
 }
 
