@@ -1,6 +1,6 @@
 {
   "name": "DOM Watcher",
-  "version": "1.1",
+  "version": "1.2",
   "manifest_version": 2,
   "description": "Watches DOM element values and reports it back.",
   "browser_action": {
